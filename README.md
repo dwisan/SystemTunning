@@ -26,7 +26,13 @@ net.ipv4.tcp_syncookies = 1
 # The maximum number of "backlogged sockets".  Default is 128.
 net.core.somaxconn = 1024
 
+-- Disable the TCP timestamps option for better CPU utilization:
+net.ipv4.tcp_timestamps=0
 
+-- Enable the TCP selective acks option for better throughput
+net.ipv4.tcp_sack=1
+
+-- 
 
 # maximum Linux TCP buffer sizes
 
@@ -38,19 +44,27 @@ For 1GE: set max to 16MB
 For 1GB:
 net.core.rmem_max = 16777216 - maximum receive window 
 net.core.wmem_max = 16777216 - maximum send window
+net.core.rmem_default = 16777216
+net.core.wmem_default = 16777216
+net.core.optmem_max = 16777216
 
 For 10GB:
 net.core.rmem_max = 33554432 - maximum receive window
 net.core.wmem_max = 33554432 - maximum send window
+net.core.rmem_default = 33554432
+net.core.wmem_default = 33554432
+net.core.optmem_max = 33554432
 
 -- When a system is under heavy load and an interface receives a lot of packets, then the Kernel might not process them fast enough. You can increase the number of packets hold in the queue (backlog)
 
-net.core.netdev_max_backlog = 5000 - increase maximum backlog size for devices
+net.core.netdev_max_backlog = 5000 - Increase the maximum length of processor input queues
 
 # IPv4
 
--- To get better throughput in a network, it might make sense to enable TCP window scaling as defined in RFC1323:
+-- Enable low latency mode for TCP
+net.ipv4.tcp_low_latency=1
 
+-- To get better throughput in a network, it might make sense to enable TCP window scaling as defined in RFC1323:
 net.ipv4.tcp_window_scaling = 1
 
 -- Some applications support higher read and write buffers for sockets. The buffer size parameters are defined by 3 values (min, default, max)
