@@ -5,6 +5,23 @@ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Document
 ```
 >File Handle Limits
 ```
+# daemon processes use pam_limits
+/etc/security/limits.conf
+
+* soft nofile 100000
+* hard nofile 100000
+root soft nofile 100000
+root hard nofile 100000
+
+# maximum open files for systemd
+/etc/systemd/system/<service_name>.service.d/override.conf
+[Service]
+LimitNOFILE=100000
+
+systemctl daemon-reload
+systemctl restart <service_name>
+
+# sysctl.conf
 # increase maximum filedescriptors
 fs.file-max = 100000
 ```
