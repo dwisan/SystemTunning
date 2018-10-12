@@ -1,6 +1,26 @@
-> Linux TCP Tunning
+>File Handle Limits
 ```
-maximum Linux TCP buffer sizes
+fs.file-max = 100000
+```
+> Socket Tuning
+```
+# Use the full range of ports.
+net.ipv4.ip_local_port_range = 1024 65535
+
+# Enables fast recycling of TIME_WAIT sockets.
+net.ipv4.tcp_tw_recycle = 1
+
+# Allow reuse of sockets in TIME_WAIT state for new connections
+net.ipv4.tcp_tw_reuse = 1
+
+# Increase the number of outstanding syn requests allowed.
+net.ipv4.tcp_max_syn_backlog = 4096
+net.ipv4.tcp_syncookies = 1
+
+# The maximum number of "backlogged sockets".  Default is 128.
+net.core.somaxconn = 1024
+
+# maximum Linux TCP buffer sizes
 
 For 1GE: set max to 16MB
 
